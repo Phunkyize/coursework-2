@@ -16,6 +16,7 @@ pipeline {
         stage('Test image') {
             steps {
                 echo 'testing application'
+                                echo 'testing application'
             }
         }
 

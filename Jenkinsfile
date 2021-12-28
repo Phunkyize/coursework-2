@@ -9,7 +9,9 @@ pipeline {
     stages {
         stage('Build Image') {
             steps {
-                echo 'testing application'
+                script {
+                    dockerImage = docker.build("drewzydrew/node-web-app:${env.BUILD_ID}")
+                }
             }
         }
 
@@ -21,8 +23,15 @@ pipeline {
         }
 
         stage('Push image to DockerHub') {
+            environment {
+                registryCredentials = 'dockerhublogin'
+            }
             steps {
-                echo 'testing application'
+                script {
+                    docker.withRegistry('', registryCredentials) {
+                        dockerImage.push()
+                    }
+                }
             }
         }
 

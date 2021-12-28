@@ -37,7 +37,9 @@ pipeline {
 
         stage('Deploy to Kubernetes') {
             steps {
-                echo 'testing application'
+                sshagent(['ubuntussh']) {
+                    sh "ssh ubuntu@52.4.33.41 \"kubectl set image deployments/node-web-app node-web-app=drewzydrew/node-web-app:${env.BUILD_ID}\""
+                }
             }
         }
     }

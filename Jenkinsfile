@@ -17,8 +17,10 @@ pipeline {
 
         stage('Test image') {
             steps {
-                echo 'testing application'
-                                echo 'testing application'
+                sshagent(['ubuntussh']) {
+                    sh "ssh ubuntu@52.4.33.41 \"docker container run --detach --rm --name test drewzydrew/node-web-app:${env.BUILD_ID}\""
+                    sh "ssh ubuntu@52.4.33.41 \"docker stop test\""
+                }
             }
         }
 
